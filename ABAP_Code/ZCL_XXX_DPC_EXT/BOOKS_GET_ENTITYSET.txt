@@ -1,0 +1,22 @@
+METHOD books_get_entityset.
+*----------------------------------------------------------------------------
+* Aquí codificamos los valores que se van a ver en la sección master
+* Como es sólo un ejemplo, el código va a piñón :P
+*----------------------------------------------------------------------------
+* In this method we codify the values to be shown in the master section
+* As it is just an example, the code is hardcoded (please, do not translate literally the spanish expresion "ir a piñon" :D)
+*----------------------------------------------------------------------------
+
+  FIELD-SYMBOLS: <ls_book> LIKE LINE OF et_entityset.
+
+  APPEND INITIAL LINE TO et_entityset ASSIGNING <ls_book>.
+  <ls_book>-id = 'LEGUIN'.
+  <ls_book>-name = 'Ursula Kroeber Le Guin'.
+  APPEND INITIAL LINE TO et_entityset ASSIGNING <ls_book>.
+  <ls_book>-id = 'TOLKIEN'.
+  <ls_book>-name = 'John Ronald Reuel Tolkien'.
+  APPEND INITIAL LINE TO et_entityset ASSIGNING <ls_book>.
+  <ls_book>-id = 'WEIS'.
+  <ls_book>-name = 'Margaret Weis'.
+
+ENDMETHOD.

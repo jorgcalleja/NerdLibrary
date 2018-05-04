@@ -1,0 +1,53 @@
+METHOD /iwbep/if_mgw_appl_srv_runtime~get_stream.
+  DATA: ls_stream   TYPE ty_s_media_resource,
+        lv_xcontent TYPE xstring,
+        header      TYPE ihttpnvp,
+        lv_id       TYPE zjgc_library-id,
+        lt_abaplist TYPE TABLE OF abaplist,
+        lt_lines    TYPE TABLE OF tline.
+
+  FIELD-SYMBOLS: <ls_key> LIKE LINE OF it_key_tab.
+
+  CASE iv_entity_set_name.
+    WHEN 'Books'.
+      READ TABLE it_key_tab ASSIGNING <ls_key> WITH KEY name = 'Id'.
+      IF sy-subrc = 0.
+        lv_id = <ls_key>-value.
+      ELSE.
+        " ... gestión de errores
+      ENDIF.
+
+      " Recuperar el xstring
+      CALL FUNCTION 'ZJGC_LIBRARY'
+        EXPORTING iv_id = lv_id
+        IMPORTING ev_xcontent = lv_xcontent.
+
+
+      IF lv_xcontent IS NOT INITIAL.
+        ls_stream-value     = lv_xcontent.
+        ls_stream-mime_type = 'application/pdf'.
+
+        copy_data_to_ref( EXPORTING is_data = ls_stream
+                          CHANGING  cr_data = er_stream ).
+
+        " Add header to be displayed inline instead of being downloaded
+        header-name = 'Content-Disposition'.                "#EC NOTEXT
+        header-value = 'inline; Filename="Library.pdf"'.    "#EC NOTEXT
+        set_header( EXPORTING is_header = header ).
+
+        header-name = 'Cache-Control'.                      "#EC NOTEXT
+        header-value = 'no-cache, no-store'.                "#EC NOTEXT
+        set_header( EXPORTING is_header = header ).
+
+        header-name = 'Pragma'.                             "#EC NOTEXT
+        header-value = 'no-cache'.                          "#EC NOTEXT
+        set_header( EXPORTING is_header = header ).
+
+        header-name = 'Expires'.
+        header-value = '-1'.
+        set_header( EXPORTING is_header = header ).
+      ENDIF.
+
+  ENDCASE.
+
+ENDMETHOD.

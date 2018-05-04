@@ -1,0 +1,40 @@
+Crear servicio oData en SAP 
+
+Estructura en SE11 con el Id, nombre y MimeType.
+Por ejemplo:
+
+ID			1 Types					CHAR	10	0	                                                            
+NAME		1 Types					CHAR	60	0	                                                            
+MIME_TYPE	1 Types	/IPRO/MIME_TYPE	CHAR	64	0	MIME Type
+
+
+
+En la transacción SEGW, crea un nuevo proyecto
+- Entidad BOOK
+  -- Properties:
+     -- ID (Id del autor del que vamos a mostrar los libros en PDF)
+     -- Nombre (nombre del autor)
+     -- MimeType (string of 64)
+- Entityset BOOKS
+  -- ¡Recuerda marcarlo como Addressable!
+- Activa el servicio en /n/IWFND/MAINT_SERVICE
+  
+-----------------------------------------------------------------------------
+
+Create oData service in SAP
+
+Structure in SE11 with ID, Name and MimeType.
+For example:
+ID			1 Types					CHAR	10	0	                                                            
+NAME		1 Types					CHAR	60	0	                                                            
+MIME_TYPE	1 Types	/IPRO/MIME_TYPE	CHAR	64	0	MIME Type
+
+In the SEGW transaction, create a new project:
+- Entity BOOK
+  -- Properties:
+     -- ID (Id of the author whose books are going to be displayed in PDF)
+     -- Nombre (name of the author)
+     -- MimeType (string of 64)
+- Entityset BOOKS
+  -- Remember to set it as addressable!
+- Activate the service in /n/IWFND/MAINT_SERVICE

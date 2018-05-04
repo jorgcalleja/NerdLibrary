@@ -1,0 +1,10 @@
+method DEFINE.
+  super->define( ).
+  DATA:       lo_entity   TYPE REF TO /iwbep/if_mgw_odata_entity_typ,
+              lo_property TYPE REF TO /iwbep/if_mgw_odata_property.
+  lo_entity = model->get_entity_type( iv_entity_name = 'Book' ).			" nombre de la entidad / Entity name
+  IF lo_entity IS BOUND.
+    lo_property = lo_entity->get_property( iv_property_name = 'MimeType' ). " nombre de la propiedad mime type/ property name for mimetype
+    lo_property->set_as_content_type( ).
+  ENDIF.
+endmethod.
